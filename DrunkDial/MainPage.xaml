@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="DrunkDial.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrunkDial"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image HorizontalAlignment="Center" Height="47" VerticalAlignment="Center" Width="47" Source="Assets/manWithGlass.png" Margin="60,0,250,0" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock x:Name="Title" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Text="DrunkDial" VerticalAlignment="Center" FontSize="36" Margin="0" MinWidth="160" MinHeight="45"/>
+
+        <ListView x:Name="ContactGrid" HorizontalAlignment="Center" Height="475" Margin="0" VerticalAlignment="Center" Width="380" Grid.Row="2" Grid.Column="1" ItemClick="ContactGrid_ItemClick" IsItemClickEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:Name="ContactGridElement" Height="75" Margin="6" Holding="ContactGridElement_Holding" RightTapped="ContactGridElement_Holding" >
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout x:Name="ContactFlyOut">
+                                <MenuFlyoutItem x:Name="ContactFlyOutDelete" Text="Delete" Command="{Binding ElementName=ContactGrid, Path=DataContext.DeleteCommand}" CommandParameter="{Binding Id}"/>
+                                <!-- <MenuFlyoutItem x:Name="ContactFlyOutRefresh" Text="Refresh"/>
+                                <MenuFlyoutItem x:Name="ContactFlyOutSOS" Text="SOS Message"/> -->
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}" Width="75" Height="75">
+                            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap"></TextBlock>
+                            <TextBlock Text="{Binding Phone}" Style="{StaticResource BodyTextBlockStyle}" TextWrapping="NoWrap"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button x:Name="AddContact" Content="+" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" Click="AddContact_Click" MinWidth="40" MinHeight="55" Grid.Row="3" Grid.Column="1"/>
+        <Button x:Name="CustomMessageButton" Content="Send My Location" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0" Click="CustomMessageButton_Click" Grid.Row="3" Grid.Column="1" MinWidth="175" MinHeight="60"/>
+
+        <ProgressRing x:Name="ProgressRing" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" IsHitTestVisible="False" IsEnabled="False" Height="167" Width="168" Grid.Row="2" Grid.Column="1"/>
+
+    </Grid>
+</Page>
